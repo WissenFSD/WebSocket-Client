@@ -17,10 +17,11 @@
 
                 webSocket.onopen=function(e){
 
-                    alert("Bağlandı : "+e);
+                    //alert("Bağlandı : "+e);
                 };
-                webSocket.onclose=function(e){
 
+                webSocket.onclose=function(e){
+                    debugger;
                     alert("Kapandı"+e);
                 };
                 webSocket.onerror=function(e){
@@ -28,7 +29,8 @@
                     alert("Hata"+e);
                 };
                 webSocket.onmessage=function(e){
-                    alert("Mesaj :"+e.data);
+                    
+                    $(".lbltextarea").append(e.data);
                 }
 
             });
@@ -43,8 +45,8 @@
             $(".btnSendMessage").click(function(){
 
 
-             
-               var message =  $(".lbltextarea").val();
+               var message =   $(".txttext").val();
+               $(".lbltextarea").append(message);
                webSocket.send(message);
                alert(message);
 
@@ -53,13 +55,22 @@
             });
         });
     </script>
-
+<style>
+    
+</style>
 </head>
 <body>
+    <div>
     <input class="btnConnect" type="button" value="Connect">
     <input class="btnDisconnet" type="button" value="DisConnect">
+     </div>
+<div>
     <textarea class="lbltextarea" style="height: 200px;width: 300px;"></textarea>
-
+</div>
+<div>
+    <input type="text" class="txttext">
     <input class="btnSendMessage" type="button" value="Send">
+</div>
+
 </body>
 </html>
