@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <script>
+
+        var webSocket;
+        $(document).ready(function(){
+
+            $(".btnConnect").click(function(){
+
+                webSocket=new WebSocket("ws://localhost:5160/wissen");
+
+                webSocket.onopen=function(e){
+
+                    alert("Bağlandı : "+e);
+                };
+                webSocket.onclose=function(e){
+
+                    alert("Kapandı"+e);
+                };
+                webSocket.onerror=function(e){
+
+                    alert("Hata"+e);
+                };
+                webSocket.onmessage=function(e){
+                    alert("Mesaj :"+e.data);
+                }
+
+            });
+
+            
+            $(".btnDisconnect").click(function(){
+
+
+                webSocket.close();
+            });
+
+            $(".btnSendMessage").click(function(){
+
+
+             
+               var message =  $(".lbltextarea").val();
+               webSocket.send(message);
+               alert(message);
+
+
+
+            });
+        });
+    </script>
+
+</head>
+<body>
+    <input class="btnConnect" type="button" value="Connect">
+    <input class="btnDisconnet" type="button" value="DisConnect">
+    <textarea class="lbltextarea" style="height: 200px;width: 300px;"></textarea>
+
+    <input class="btnSendMessage" type="button" value="Send">
+</body>
+</html>
