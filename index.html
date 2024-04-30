@@ -13,7 +13,8 @@
 
             $(".btnConnect").click(function(){
 
-                webSocket=new WebSocket("ws://localhost:5160/wissen");
+                const random_uuid = uuidv4();
+                webSocket=new WebSocket("ws://localhost:5160/wissen?random="+random_uuid);
 
                 webSocket.onopen=function(e){
 
@@ -21,16 +22,16 @@
                 };
 
                 webSocket.onclose=function(e){
-                    debugger;
-                    alert("Kapandı"+e);
+                    
+                    //alert("Kapandı"+e);
                 };
                 webSocket.onerror=function(e){
 
-                    alert("Hata"+e);
+                    //alert("Hata"+e);
                 };
                 webSocket.onmessage=function(e){
                     
-                    $(".lbltextarea").append(e.data);
+                    $(".lbltextarea").append('&#13;&#10;'+e.data);
                 }
 
             });
@@ -46,13 +47,26 @@
 
 
                var message =   $(".txttext").val();
-               $(".lbltextarea").append(message);
+               //$(".lbltextarea").append(message);
                webSocket.send(message);
-               alert(message);
+              // alert(message);
 
 
 
             });
+
+            function uuidv4() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+            .replace(/[xy]/g, function (c) {
+             const r = Math.random() * 16 | 0, 
+            v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+             });
+}
+
+
+
+
         });
     </script>
 <style>
